@@ -18,7 +18,7 @@ export const signNewUser=userData=>dispatch=>{
         );
         dispatch({type:CREATE_USER_SUCCESS})
     })
-    .catch(error=>{
+    .catch(error=>{ 
         if(error.response){
             toast.error(JSON.stringify(error.response.data));
             dispatch({

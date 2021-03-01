@@ -3,11 +3,15 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {useForm,Controller} from 'react-hook-form';
+import {login} from "./LoginActions.js";
+import {useDispatch} from 'react-redux';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,8 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function LogIn() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const {handleSubmit,control,errors}=useForm();
+  const onSubmit=(data)=>{
+    dispatch(login(data,"/dashboard"))
+    console.log(data);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -40,31 +50,26 @@ export default function SignIn() {
         <Avatar className={classes.avatar}>
         </Avatar>
         <Typography component="h1" variant="h5">
-            LogIn
+            Log In
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <Controller as={TextField} variant="outlined"
             margin="normal"
             required
-            fullWidth
             id="username"
             label="Username"
             name="username"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
+            fullWidth 
+            autoFocus control={control} defaultValue="" />
+           <Controller as={TextField} variant="outlined"
             margin="normal"
             required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
             id="password"
-            autoComplete="current-password"
-          />
+            label="Password"
+            name="password"
+            fullWidth 
+            control={control} defaultValue="" />
+            {errors.password && <span>This field is required</span>}
           <Button
             type="submit"
             fullWidth
@@ -76,7 +81,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item >
-              <Link variant="body2" href="/signup">
+              <Link  to="/signup">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
