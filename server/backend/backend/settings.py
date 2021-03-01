@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fatmugapp',
+    'api',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken'
