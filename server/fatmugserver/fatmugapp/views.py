@@ -34,15 +34,22 @@ class UserCreateAPIView(generics.CreateAPIView):
 
 class UserLoginAPIView(APIView):
     permission_classes=()
+    def get(self, request,*args,**kwargs):
+        token_key = request.headers['Authorization']
+        user=Token.objects.get(key=token_key).user
+        username=user.username
+        if username:
+            return Response({"success":"success","username":username},status=status.HTTP_200_OK)
+
+        return Response({"error":"Not authorized user"},status=status.HTTP_400_BAD_REQUEST)
 
     def post(self,request,*args,**kwargs):
         username=request.data.get('username')
         password=request.data.get('password')
         user=authenticate(username=username,password=password)
         token=Token.objects.get(user=user).key
-
         if user:
-            return Response({"token":token,"success":"success","fullname":user.fullname},status=status.HTTP_200_OK)
+            return Response({"token":token,"success":"success","fullname":user.fullname,"username":user.username},status=status.HTTP_200_OK)
         return Response({"error":"Wrong Credential"},status=status.HTTP_400_BAD_REQUEST)
 
 

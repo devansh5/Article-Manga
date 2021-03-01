@@ -10,7 +10,7 @@ export const login=(userData,redirectTo)=>dispatch=>{
     .then(response=>{
         // console.log(response.data.token)
         const auth_token=response.data.token;
-        console.log(response.data);
+        // console.log(response.data);
         setAxiosAuthToken(auth_token);
         dispatch(setToken(auth_token));
         dispatch(getCurrentUser(redirectTo));
