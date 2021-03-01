@@ -3,14 +3,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useForm,Controller} from 'react-hook-form';
-import {useDispatch,useSelector} from 'react-redux';
-import {signNewUser} from './SignupActions';
+import { useForm, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { signNewUser } from './SignupActions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,8 +36,8 @@ export default function SignIn() {
   const classes = useStyles();
   const createUser = useSelector(state => state.createUser)
   const dispatch = useDispatch();
-  const {handleSubmit,control}=useForm();
-  const onSubmit=(data)=>{
+  const { handleSubmit, control } = useForm();
+  const onSubmit = (data) => {
     dispatch(signNewUser(data));
   }
 
@@ -51,22 +51,22 @@ export default function SignIn() {
           Sign Up
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <Controller as={TextField} variant="outlined"
+          <Controller as={TextField} variant="outlined"
             margin="normal"
             required
             id="username"
             label="Username"
             name="username"
-            fullWidth 
+            fullWidth
             autoFocus control={control} defaultValue="" />
-            {createUser.usernameError}
+          {createUser.usernameError}
           <Controller as={TextField} variant="outlined"
             margin="normal"
             required
             id="password"
             label="Password"
             name="password"
-            fullWidth 
+            fullWidth
             control={control} defaultValue="" />
           {createUser.password}
           <Button
