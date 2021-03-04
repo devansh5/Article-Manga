@@ -11,6 +11,7 @@ from rest_framework import exceptions
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
+from rest_framework import viewsets
 # Create your views here.
 
 class UserListView(generics.ListAPIView):
@@ -36,7 +37,8 @@ class UserCreateAPIView(generics.CreateAPIView):
 class UserLoginAPIView(APIView):
     permission_classes=()
     def get(self, request,*args,**kwargs):
-        token_key = request.headers['Authorization']
+        token = request.headers['Authorization']
+        token_key=token.split(' ')[1]
         user=Token.objects.get(key=token_key).user
         username=user.username
         if username:
@@ -58,10 +60,13 @@ class UserLoginAPIView(APIView):
 
 
 
-class ArticleList(generics.ListCreateAPIView):
+class ArticleList(viewsets.ModelViewSet):
     queryset=Articles.objects.all()
     serializer_class=serializers.ArticleSerializer
 
 
     def perform_create(self,serializer):
         serializer.save(owner=self.request.user)
+    
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)

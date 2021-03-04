@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
 
 
     def __str__(self):
-        return self.fullname
+        return self.username
 
 class Articles(models.Model):
     created=models.DateTimeField(auto_now_add=True)
