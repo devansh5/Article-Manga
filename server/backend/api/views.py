@@ -1,5 +1,6 @@
 from rest_framework import generics,status
 from django.contrib.auth import authenticate
+from django.db import IntegrityError
 from . import models
 from .models import CustomUser,Articles
 from rest_framework.views import APIView
@@ -47,7 +48,10 @@ class UserLoginAPIView(APIView):
         username=request.data.get('username')
         password=request.data.get('password')
         user=authenticate(username=username,password=password)
-        token=Token.objects.get(user=user).key
+        try:
+            token=Token.objects.get(user=user).key
+        except Token.DoesNotExist:
+            return Response({"error":"user doesn't exist" },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         if user:
             return Response({"token":token,"success":"success","fullname":user.fullname,"username":user.username},status=status.HTTP_200_OK)
         return Response({"error":"Wrong Credential"},status=status.HTTP_400_BAD_REQUEST)

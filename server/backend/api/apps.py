@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class FatmugappConfig(AppConfig):
-    name = 'fatmugapp'
+class Api  Config(AppConfig):
+    name = 'api'
