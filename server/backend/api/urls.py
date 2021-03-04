@@ -1,6 +1,6 @@
 from django.urls import include,path
 from rest_framework.authtoken import views
-from .views import UserListView,UserCreateAPIView,UserLoginAPIView,ArticleList
+from .views import UserListView,UserCreateAPIView,UserLoginAPIView,ArticleList,ArticlesAll
 from rest_framework.routers import DefaultRouter
 
 router=DefaultRouter()
@@ -9,6 +9,7 @@ urlpatterns=[
     path('',UserListView.as_view()),
     path('signup/',UserCreateAPIView.as_view(),name='user-register'),
     path('login/',UserLoginAPIView.as_view(),name='user-login'),
+    path('showall/',ArticlesAll.as_view(),name='all-articles'),
     path('',include(router.urls)),
 
     # path('articles/',ArticleListAPIView.as_view(),name='article-list'),

@@ -70,3 +70,7 @@ class ArticleList(viewsets.ModelViewSet):
     
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
+
+class ArticlesAll(generics.ListCreateAPIView):
+    queryset=Articles.objects.all()
+    serializer_class=serializers.ArticleSerializer
